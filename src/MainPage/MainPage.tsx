@@ -9,13 +9,13 @@ function useRandomNumber() {
 
 const startTime = Date.now();
 function useGetTimer() {
-  const [time, setTime] = React.useState<string>("");
+  const [time, setTime] = React.useState<string>('0.0');
 
   React.useEffect(() => {
     const intervalRef = window.setInterval(() => {
       const now = Date.now();
 
-      setTime((now - startTime).toString());
+      setTime(((now - startTime)/1000).toFixed(1));
     });
     return () => {
       clearInterval(intervalRef);
@@ -24,6 +24,14 @@ function useGetTimer() {
 
   return time;
 }
+
+const PageLoadTimer : React.FC = () => {
+
+  const time = useGetTimer();
+
+  return  <div>The page loaded {time} seconds ago</div>
+}
+
 
 const Content: React.FC<{
   open: any;
@@ -41,15 +49,16 @@ const Content: React.FC<{
 const MainPage: React.FC = () => {
   const [open, setOpen] = React.useState({ value: false });
 
-  const time = useGetTimer();
   return (
     <div>
-      <div>The page loaded {time} seconds ago</div>
+      <PageLoadTimer />
       <button
         onClick={() =>
-          setOpen((value) => {
-            value.value = !value.value;
-            return value;
+          setOpen((prevState) => {
+
+            let newState = {...prevState};
+            newState.value = !newState.value;
+            return newState;
           })
         }
       >
