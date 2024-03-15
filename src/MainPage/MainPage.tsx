@@ -40,14 +40,14 @@ function useGetTimer() {
   return time;
 }
 
-const PageLoadTimer : React.FC = () => {
+const PageLoadTimer: React.FC = () => {
 
   const time = useGetTimer();
 
-  const counterWidth = 18 * time.length - 1;
+  const counterWidth = 15 * time.length - 1;
 
 
-  return  <div>The page loaded<span style={{ width : counterWidth, display: 'inline-block' }}>{time}</span>seconds ago</div>
+  return <div>The page loaded<span className="counterView" style={{ width: counterWidth }}>{time}</span>seconds ago</div>
 }
 
 
