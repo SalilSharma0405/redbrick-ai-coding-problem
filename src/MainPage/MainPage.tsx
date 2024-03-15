@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 // START - DO NOT EDIT
 function useRandomNumber() {
@@ -7,20 +7,34 @@ function useRandomNumber() {
 }
 // END - DO NOT EDIT
 
-const startTime = Date.now();
+const START_TIME = Date.now();
+const INTERVAL_TIME = 100;
+
 function useGetTimer() {
   const [time, setTime] = React.useState<string>('0.0');
+  const timerPreviousVal = useRef<number>(START_TIME);
 
-  React.useEffect(() => {
-    const intervalRef = window.setInterval(() => {
+  const startTimer = () => {
+
+    const startInterval = window.setTimeout(() => {
       const now = Date.now();
+      const deltaTime = now - timerPreviousVal.current - INTERVAL_TIME; // Time exhauted in JS thread 
 
-      setTime(((now - startTime)/1000).toFixed(1));
-    });
+      setTime(((now - START_TIME - deltaTime) / 1000).toFixed(1));
+
+      timerPreviousVal.current = now;
+
+      startTimer();
+
+    }, INTERVAL_TIME);
+
     return () => {
-      clearInterval(intervalRef);
-    };
-  });
+      clearTimeout(startInterval);
+    }
+
+  }
+
+  useEffect(startTimer, [])
 
   return time;
 }
