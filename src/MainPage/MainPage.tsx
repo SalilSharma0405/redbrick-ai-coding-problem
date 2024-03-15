@@ -48,12 +48,12 @@ const PageLoadTimer : React.FC = () => {
 
 
 const Content: React.FC<{
-  open: any;
+  isOpen: any;
 }> = (props) => {
   // START - DO NOT EDIT
   const randomNumber = useRandomNumber();
   // END - DO NOT EDIT
-  if (!props.open.value) {
+  if (!props.isOpen) {
     return null;
   }
 
@@ -61,25 +61,21 @@ const Content: React.FC<{
 };
 
 const MainPage: React.FC = () => {
-  const [open, setOpen] = React.useState({ value: false });
+  const [isOpen, setIsOpen] = React.useState(false);
+
+
+  const toggleIsOpen = ()=> setIsOpen(isOpen=>!isOpen);
 
   return (
     <div>
       <PageLoadTimer />
       <button
-        onClick={() =>
-          setOpen((prevState) => {
-
-            let newState = {...prevState};
-            newState.value = !newState.value;
-            return newState;
-          })
-        }
+        onClick={toggleIsOpen}
       >
         Generate random number
       </button>
 
-      <Content open={open} />
+      <Content isOpen={isOpen} />
     </div>
   );
 };
