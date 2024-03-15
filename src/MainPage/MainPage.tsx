@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import './MainPage.css'
 
 // START - DO NOT EDIT
 function useRandomNumber() {
@@ -43,7 +44,10 @@ const PageLoadTimer : React.FC = () => {
 
   const time = useGetTimer();
 
-  return  <div>The page loaded {time} seconds ago</div>
+  const counterWidth = 18 * time.length - 1;
+
+
+  return  <div>The page loaded<span style={{ width : counterWidth, display: 'inline-block' }}>{time}</span>seconds ago</div>
 }
 
 
@@ -54,10 +58,11 @@ const Content: React.FC<{
   const randomNumber = useRandomNumber();
   // END - DO NOT EDIT
   if (!props.isOpen) {
-    return null;
+    return <div className="contentContainer"   />;
   }
-
-  return <div>Your random number is: {randomNumber}</div>;
+  
+  
+  return <div className="contentContainer">Your random number is: {randomNumber}</div>;
 };
 
 const MainPage: React.FC = () => {
@@ -67,10 +72,11 @@ const MainPage: React.FC = () => {
   const toggleIsOpen = ()=> setIsOpen(isOpen=>!isOpen);
 
   return (
-    <div>
+    <div className="container">
       <PageLoadTimer />
       <button
         onClick={toggleIsOpen}
+        className="btnPrimary"
       >
         Generate random number
       </button>
