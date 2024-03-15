@@ -1,12 +1,22 @@
 .container{
-    background: #121212;
+    background:#121212;
     text-align: center;
     min-width: 500px;
     padding: 24px;
     border-radius: 8px;
     color: #fff;
     border: 2px solid #181818;
+
+    animation-name:transition;
+    animation-duration:4s;
+  
 }
+
+@keyframes transition{
+    0%{opacity:0;}
+    100%{opacity:1;}
+}
+
 
 .contentContainer{
     height: 30px;
